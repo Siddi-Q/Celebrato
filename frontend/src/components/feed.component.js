@@ -7,7 +7,7 @@ export default function Feed() {
     const posts = useSelector(state => state.posts);
 
     const renderedPosts = posts.map(post => (
-        <Post key={post.id} content={post.content} />
+        <Post key={post.id} id={post.id} content={post.content} />
     ));
 
     return (
