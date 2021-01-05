@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-export default function Post() {
+export default function Post(props) {
     return (
         <Card>
             <CardHeader
@@ -19,7 +19,7 @@ export default function Post() {
                 subheader="Date"
             />
             <CardContent>
-                <Typography>Some text</Typography>
+                <Typography>{props.content}</Typography>
             </CardContent>
         </Card>
     );

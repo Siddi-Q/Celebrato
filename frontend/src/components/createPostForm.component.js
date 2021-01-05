@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { postAdded } from '../slices/postsSlice';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -9,6 +12,8 @@ import TextField from '@material-ui/core/TextField';
 export default function CreatePostForm() {
     const [post, setPost] = useState('');
 
+    const dispatch = useDispatch();
+
     const handlePostChange = (event) => {
         setPost(event.target.value);
     }
@@ -16,6 +21,7 @@ export default function CreatePostForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Submitted Post!");
+        dispatch(postAdded({content: post}));
         setPost('');
     }
 
