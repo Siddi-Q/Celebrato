@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = [
-    {content:"My first post!"},
-    {content:"Hello world!"},
-    {content:"Bye!"}
+    {id: '1', content:"My first post!"},
+    {id: '2', content:"Hello world!"},
+    {id: '3', content:"Bye!"}
 ]
 
 const postsSlice = createSlice({
@@ -17,6 +17,7 @@ const postsSlice = createSlice({
             prepare(content) {
                 return {
                     payload: {
+                        id: nanoid(),
                         content
                     }
                 }
