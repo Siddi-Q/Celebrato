@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import EditPostForm from './editPostForm.component';
 
@@ -17,6 +18,7 @@ export default function Post(props) {
     const [open, setOpen] = useState(false);
 
     const handleClick = () => setOpen(true);
+    const author = useSelector(state => state.users.find(user => user.id === props.userId));
 
     return (
         <>
@@ -24,7 +26,7 @@ export default function Post(props) {
                 <CardHeader
                     avatar={<Avatar>A</Avatar>}
                     action={<IconButton><MoreHorizIcon /></IconButton>}
-                    title="FirstName LastName"
+                    title={author.name}
                     subheader="Date"
                 />
                 <CardContent>
