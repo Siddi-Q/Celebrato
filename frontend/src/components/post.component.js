@@ -26,7 +26,7 @@ export default function Post(props) {
                 <CardHeader
                     avatar={<Avatar>A</Avatar>}
                     action={<IconButton><MoreHorizIcon /></IconButton>}
-                    title={author.name}
+                    title={author ? author.name : "Unknown Author"}
                     subheader={props.date}
                 />
                 <CardContent>
