@@ -1,10 +1,10 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-const initialState = [
-    {id: '1', content:"My first post!", user: '0', date: new Date(2021, 0).toDateString()},
-    {id: '2', content:"Hello world!", user: '2', date: new Date(2020, 11, 20).toDateString()},
-    {id: '3', content:"Bye!", user: '1', date: new Date(2021, 0, 6).toDateString()}
-]
+const initialState = {
+    posts: [],
+    status: 'idle',
+    error: null
+}
 
 const postsSlice = createSlice({
     name: 'posts',
@@ -12,7 +12,7 @@ const postsSlice = createSlice({
     reducers: {
         postAdded: {
             reducer(state, action) {
-                state.push(action.payload)
+                state.posts.push(action.payload);
             },
             prepare(content, userId) {
                 return {
@@ -27,7 +27,7 @@ const postsSlice = createSlice({
         },
         postUpdated(state, action) {
             const {id, content} = action.payload;
-            const existingPost = state.find(post => post.id === id);
+            const existingPost = state.posts.find(post => post.id === id);
             if(existingPost) {
                 existingPost.content = content;
             }
@@ -39,4 +39,4 @@ export const { postAdded, postUpdated } = postsSlice.actions
 
 export default postsSlice.reducer
 
-export const selectAllPosts = state => state.posts
+export const selectAllPosts = state => state.posts.posts
