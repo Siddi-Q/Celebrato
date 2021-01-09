@@ -5,6 +5,8 @@ import { fetchPosts, selectAllPosts } from '../slices/postsSlice';
 
 import Post from './post.component';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 export default function Feed() {
     const dispatch = useDispatch();
     const posts = useSelector(selectAllPosts);
@@ -21,9 +23,17 @@ export default function Feed() {
         <Post key={post.id} id={post.id} content={post.content} userId={post.user} date={post.date}/>
     ));
 
-    return (
-        <>
-            {renderedPosts}
-        </>
-    );
+    if(postStatus === 'loading') {
+        return <CircularProgress />
+    }
+    else if(postStatus === 'succeeded') {
+        return (
+            <>
+                {renderedPosts}
+            </>
+        );
+    }
+    else {
+        return <p>An error occurred!</p>
+    }
 }
