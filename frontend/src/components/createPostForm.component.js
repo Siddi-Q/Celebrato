@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { postAdded } from '../slices/postsSlice';
+import { selectAllUsers } from '../slices/usersSlice';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -14,7 +15,7 @@ export default function CreatePostForm() {
     const [userId, setUserId] = useState('0');
 
     const dispatch = useDispatch();
-    const users = useSelector(state => state.users);
+    const users = useSelector(selectAllUsers);
 
     const handlePostChange = (event) => {
         setPost(event.target.value);
