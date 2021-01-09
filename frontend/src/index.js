@@ -6,9 +6,12 @@ import * as serviceWorker from './serviceWorker';
 import store from './store/store'
 import { Provider } from 'react-redux';
 
+import { fetchUsers } from './slices/usersSlice';
+
 import makeServer from './mockApi/server'
 
 makeServer();
+store.dispatch(fetchUsers());
 
 ReactDOM.render(
   <React.StrictMode>
