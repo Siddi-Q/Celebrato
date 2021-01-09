@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 export default function CreatePostForm() {
     const [post, setPost] = useState('');
-    const [userId, setUserId] = useState('0');
+    const [userId, setUserId] = useState('1');
 
     const dispatch = useDispatch();
     const users = useSelector(selectAllUsers);
