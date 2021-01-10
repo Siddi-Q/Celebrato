@@ -31,6 +31,13 @@ export default function makeServer() {
             this.get('/users', (schema) => {
                 return schema.users.all()
             });
+
+            this.post('/addNewPost', (schema, request) => {
+                const postData = JSON.parse(request.requestBody);
+                postData.date = new Date().toDateString();
+                const result = schema.create("post", postData);
+                return result
+            });
         }
     })
 }
