@@ -14,9 +14,7 @@ export default function Home() {
                 <Grid item xs={12} sm={10} md={7}>
                     <CreatePostForm />
                 </Grid>
-                <Grid item xs={12} sm={10} md={7}>
-                    <Feed />
-                </Grid>
+                <Feed />
             </Grid>
         </>
     );
