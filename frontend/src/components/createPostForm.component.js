@@ -27,8 +27,7 @@ export default function CreatePostForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Submitted Post!");
-        dispatch(addNewPost({content: post, user: userId}));
+        dispatch(addNewPost({content: post, userId}));
         setPost('');
     }
 

@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async newPost => {
-    const response = await fetch('/mockApi/addNewPost', {
+    const response = await fetch('/mockApi/posts', {
         method: 'POST',
         body: JSON.stringify(newPost)
     });
