@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { postAdded } from '../slices/postsSlice';
+import { addNewPost } from '../slices/postsSlice';
 import { selectAllUsers } from '../slices/usersSlice';
 
 import Button from '@material-ui/core/Button';
@@ -28,7 +28,7 @@ export default function CreatePostForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Submitted Post!");
-        dispatch(postAdded(post, userId));
+        dispatch(addNewPost({content: post, user: userId}));
         setPost('');
     }
 
