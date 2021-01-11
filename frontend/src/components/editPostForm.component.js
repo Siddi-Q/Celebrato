@@ -28,8 +28,8 @@ export default function EditPostForm(props) {
 
     return (
         <Dialog open={props.isOpen} onClose={handleClose}>
-            <DialogTitle>Edit Post</DialogTitle>
-            <DialogContent>
+            <DialogTitle align='center'>Edit Post</DialogTitle>
+            <DialogContent dividers>
                 <form onSubmit={handleSubmit}>
                     <TextField 
                         fullWidth margin="normal" variant="outlined"
