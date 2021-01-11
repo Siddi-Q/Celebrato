@@ -6,6 +6,7 @@ import { fetchPosts, selectAllPosts } from '../slices/postsSlice';
 import Post from './post.component';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 
 export default function Feed() {
     const dispatch = useDispatch();
@@ -24,7 +25,11 @@ export default function Feed() {
     ));
 
     if(postStatus === 'loading') {
-        return <CircularProgress />
+        return (
+            <Grid item xs={12} sm={10} md={7} style={{textAlign: "center"}}>
+                <CircularProgress />
+            </Grid>
+        );
     }
     else if(postStatus === 'succeeded') {
         return (
