@@ -16,9 +16,12 @@ export default function makeServer() {
         },
 
         seeds(server) {
-            const user1 = server.create('user', {name: 'John Doe'});
-            const user2 = server.create('user', {name: 'Isaac Newton'});
-            const user3 = server.create('user', {name: 'Alan Turing'});
+            // const user1 = server.create('user', {name: 'John Doe'});
+            // const user2 = server.create('user', {name: 'Isaac Newton'});
+            // const user3 = server.create('user', {name: 'Alan Turing'});
+            const user1 = server.create('user', {firstName: 'John', lastName: 'Doe'});
+            const user2 = server.create('user', {firstName: 'Isaac', lastName: 'Newton'});
+            const user3 = server.create('user', {firstName: 'Alan', lastName: 'Turing'});
 
             server.create("post", { user: user1, content: "My first post!", date: new Date(2021, 0).toDateString() });
             server.create("post", { user: user2, content: "Bye!", date: new Date(2020, 11, 20).toDateString() });

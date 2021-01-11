@@ -41,13 +41,13 @@ export default function Post(props) {
             <Grid item xs={12} sm={10} md={7}>
                 <Card>
                     <CardHeader
-                        avatar={<Avatar>{author ? author.name.charAt(0) : "U"}</Avatar>}
+                        avatar={<Avatar>{author ? author.firstName.charAt(0) : "U"}</Avatar>}
                         action={
                         <IconButton onClick={handleMenuClick}>
                             <MoreHorizIcon />
                         </IconButton>
                         }
-                        title={author ? author.name : "Unknown Author"}
+                        title={author ? author.firstName + ' ' + author.lastName : "Unknown Author"}
                         subheader={props.date}
                     />
                     <Menu
