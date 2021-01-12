@@ -41,15 +41,15 @@ export default function makeServer() {
             this.post('/posts', (schema, request) => {
                 const postData = JSON.parse(request.requestBody);
                 postData.date = new Date().toDateString();
-                const result = schema.create("post", postData);
-                return result;
+                const post = schema.create("post", postData);
+                return post;
             });
 
             this.put('/posts/:id', (schema, request) => {
                 const postData = JSON.parse(request.requestBody);
                 const id = request.params.id;
-                const result = schema.posts.find(id).update('content', postData.content);
-                return result;
+                const post = schema.posts.find(id).update('content', postData.content);
+                return post;
             });
 
             this.get('/users', (schema) => {
@@ -63,10 +63,10 @@ export default function makeServer() {
 
             this.post('/users', (schema, request) => {
                 const userData = JSON.parse(request.requestBody);
-                const result = schema.create("user", userData);
-                delete result.attrs.email;
-                delete result.attrs.password;
-                return result;
+                const user = schema.create("user", userData);
+                delete user.attrs.email;
+                delete user.attrs.password;
+                return user;
             });
         }
     })
