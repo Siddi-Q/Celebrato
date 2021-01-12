@@ -28,6 +28,12 @@ export default function makeServer() {
         routes() {
             this.namespace = 'mockApi';
 
+            this.delete('/posts/:id', (schema, request) => {
+                const id = request.params.id;
+                schema.posts.find(id).destroy();
+                return {id};
+            });
+
             this.get('/posts', (schema) => {
                 return schema.posts.all();
             });
