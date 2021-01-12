@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { postUpdated } from '../slices/postsSlice';
+import { updatePost } from '../slices/postsSlice';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -22,7 +22,7 @@ export default function EditPostForm(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(postUpdated({id: props.id, content: post}));
+        dispatch(updatePost({id: props.id, content: post}));
         handleClose();
     }
 
