@@ -16,9 +16,6 @@ export default function makeServer() {
         },
 
         seeds(server) {
-            // const user1 = server.create('user', {name: 'John Doe'});
-            // const user2 = server.create('user', {name: 'Isaac Newton'});
-            // const user3 = server.create('user', {name: 'Alan Turing'});
             const user1 = server.create('user', {firstName: 'John', lastName: 'Doe'});
             const user2 = server.create('user', {firstName: 'Isaac', lastName: 'Newton'});
             const user3 = server.create('user', {firstName: 'Alan', lastName: 'Turing'});
@@ -45,6 +42,13 @@ export default function makeServer() {
                 const result = schema.create("post", postData);
                 return result;
             });
+
+            this.put('/posts/:id', (schema, request) => {
+                const postData = JSON.parse(request.requestBody);
+                const id = request.params.id;
+                const result = schema.posts.find(id).update('content', postData.content);
+                return result;
+            })
         }
     })
 }
