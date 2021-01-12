@@ -2,6 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = []
 
+export const addNewUser = createAsyncThunk('users/addNewUser', async newUser => {
+    const response = await fetch('/mockApi/users',  {
+        method: 'POST',
+        body: JSON.stringify(newUser)
+    });
+    const data = await response.json();
+    return data.user;
+});
+
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
     const response = await fetch('/mockApi/users');
     const data = await response.json();
@@ -13,6 +22,9 @@ const usersSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
+        [addNewUser.fulfilled]: (state, action) => {
+            state.push(action.payload);
+        },
         [fetchUsers.fulfilled]: (state, action) => {
             return action.payload
         }
