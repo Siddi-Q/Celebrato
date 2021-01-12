@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { addNewUser } from '../slices/usersSlice';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -44,6 +47,8 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const dispatch = useDispatch();
+
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value);
     }
@@ -62,7 +67,7 @@ export default function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Submitted!");
+        dispatch(addNewUser({firstName, lastName}));
     }
     
     const classes = useStyles();
