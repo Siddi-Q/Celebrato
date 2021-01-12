@@ -15,6 +15,14 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async newPost => 
     return data.post;
 });
 
+export const deletePost = createAsyncThunk('posts/deletePost', async postId => {
+    const response = await fetch(`/mockApi/posts/${postId}`, {
+        method: 'DELETE'
+    });
+    const data = await response.json();
+    return data;
+});
+
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     const response = await fetch('/mockApi/posts');
     const data = await response.json();
@@ -39,6 +47,9 @@ const postsSlice = createSlice({
     extraReducers: {
         [addNewPost.fulfilled]: (state, action) => {
             state.posts.push(action.payload)
+        },
+        [deletePost.fulfilled]: (state, action) => {
+            state.posts = state.posts.filter(post => post.id !== action.payload.id)
         },
         [fetchPosts.pending]: (state, action) => {
             state.status = 'loading'
