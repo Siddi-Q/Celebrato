@@ -67,7 +67,7 @@ export default function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(addNewUser({firstName, lastName}));
+        dispatch(addNewUser({firstName, lastName, email, password}));
     }
     
     const classes = useStyles();
