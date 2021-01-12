@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import EditPostForm from './editPostForm.component';
+import { deletePost } from '../slices/postsSlice';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -13,14 +13,17 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 
-
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+
+import EditPostForm from './editPostForm.component';
 
 export default function Post(props) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const openMenu = Boolean(anchorEl);
+
+    const dispatch = useDispatch();
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -29,6 +32,11 @@ export default function Post(props) {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
+    const handleDeletePostClick = () => {
+        setAnchorEl(null);
+        dispatch(deletePost(props.id));
+    }
 
     const handleEditPostClick = () => {
         setAnchorEl(null);
@@ -66,7 +74,7 @@ export default function Post(props) {
                         onClose={handleMenuClose}
                     >
                         <MenuItem onClick={handleEditPostClick}>Edit Post</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Delete Post</MenuItem>
+                        <MenuItem onClick={handleDeletePostClick}>Delete Post</MenuItem>
                     </Menu>
                     <CardContent>
                         <Typography>{props.content}</Typography>
