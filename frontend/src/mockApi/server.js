@@ -38,10 +38,6 @@ export default function makeServer() {
                 return schema.posts.all();
             });
 
-            this.get('/users', (schema) => {
-                return schema.users.all();
-            });
-
             this.post('/posts', (schema, request) => {
                 const postData = JSON.parse(request.requestBody);
                 postData.date = new Date().toDateString();
@@ -54,7 +50,17 @@ export default function makeServer() {
                 const id = request.params.id;
                 const result = schema.posts.find(id).update('content', postData.content);
                 return result;
-            })
+            });
+
+            this.get('/users', (schema) => {
+                return schema.users.all();
+            });
+
+            this.post('/users', (schema, request) => {
+                const userData = JSON.parse(request.requestBody);
+                const result = schema.create("user", userData);
+                return result;
+            });
         }
     })
 }
