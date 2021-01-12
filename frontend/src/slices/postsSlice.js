@@ -13,7 +13,7 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async newPost => 
     });
     const data = await response.json();
     return data.post;
-})
+});
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     const response = await fetch('/mockApi/posts');
@@ -21,18 +21,21 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     return data.posts;
 });
 
+export const updatePost = createAsyncThunk('posts/updatePost', async post => {
+    const id = post.id;
+    delete post.id;
+    const response = await fetch(`/mockApi/posts/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(post)
+    });
+    const data = await response.json();
+    return data.post;
+});
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {
-        postUpdated(state, action) {
-            const {id, content} = action.payload;
-            const existingPost = state.posts.find(post => post.id === id);
-            if(existingPost) {
-                existingPost.content = content;
-            }
-        }
-    },
+    reducers: {},
     extraReducers: {
         [addNewPost.fulfilled]: (state, action) => {
             state.posts.push(action.payload)
@@ -47,7 +50,14 @@ const postsSlice = createSlice({
         [fetchPosts.rejected]: (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
-        }
+        },
+        [updatePost.fulfilled]: (state, action) => {
+            const { id, content } = action.payload;
+            const existingPost = state.posts.find(post => post.id === id);
+            if(existingPost) {
+                existingPost.content = content;
+            }
+        } 
     }
 })
 
