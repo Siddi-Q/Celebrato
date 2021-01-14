@@ -16,9 +16,9 @@ export default function makeServer() {
         },
 
         seeds(server) {
-            const user1 = server.create('user', {firstName: 'John', lastName: 'Doe', email: 'jdoe@example.com', password: 'password1'});
-            const user2 = server.create('user', {firstName: 'Isaac', lastName: 'Newton', email: 'inewton@example.com', password: 'password2'});
-            const user3 = server.create('user', {firstName: 'Alan', lastName: 'Turing', email: 'aturing@example.com', password: 'password3'});
+            const user1 = server.create('user', {firstName: 'John', lastName: 'Doe', email: 'jdoe@example.com', password: 'password1', token: ''});
+            const user2 = server.create('user', {firstName: 'Isaac', lastName: 'Newton', email: 'inewton@example.com', password: 'password2', token: ''});
+            const user3 = server.create('user', {firstName: 'Alan', lastName: 'Turing', email: 'aturing@example.com', password: 'password3', token: ''});
 
             server.create("post", { user: user1, content: "My first post!", date: new Date(2021, 0).toDateString() });
             server.create("post", { user: user2, content: "Bye!", date: new Date(2020, 11, 20).toDateString() });
@@ -34,6 +34,12 @@ export default function makeServer() {
                 if(!Boolean(user)) {
                     return {isAuth: false}
                 }
+                
+                const token = "fake-jwt-token" + user.id;
+                user.token = token;
+                user.update('token', token);
+                console.log("user:", user);
+
                 delete user.attrs.email;
                 delete user.attrs.password;
                 return {isAuth: true, user};
