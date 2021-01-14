@@ -9,7 +9,11 @@ const initialState = {
 export const addNewPost = createAsyncThunk('posts/addNewPost', async newPost => {
     const response = await fetch('/mockApi/posts', {
         method: 'POST',
-        body: JSON.stringify(newPost)
+        body: JSON.stringify(newPost),
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        }
     });
     const data = await response.json();
     return data.post;
@@ -34,7 +38,8 @@ export const updatePost = createAsyncThunk('posts/updatePost', async post => {
     delete post.id;
     const response = await fetch(`/mockApi/posts/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(post)
+        body: JSON.stringify(post),
+        'Content-Type': 'application/json'
     });
     const data = await response.json();
     return data.post;

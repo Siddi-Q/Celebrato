@@ -5,7 +5,8 @@ const initialState = []
 export const addNewUser = createAsyncThunk('users/addNewUser', async newUser => {
     const response = await fetch('/mockApi/users',  {
         method: 'POST',
-        body: JSON.stringify(newUser)
+        body: JSON.stringify(newUser),
+        'Content-Type': 'application/json'
     });
     const data = await response.json();
     return data.user;
