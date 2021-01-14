@@ -21,7 +21,7 @@ export default function Feed() {
     }, [dispatch, postStatus])
 
     const renderedPosts = posts.map(post => (
-        <Post key={post.id} id={post.id} content={post.content} userId={post.user} date={post.date}/>
+        <Post key={post.id} post={post}/>
     ));
 
     if(postStatus === 'loading') {

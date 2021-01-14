@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addNewPost } from '../slices/postsSlice';
-import { selectAllUsers } from '../slices/usersSlice';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -12,17 +11,12 @@ import TextField from '@material-ui/core/TextField';
 
 export default function CreatePostForm() {
     const [post, setPost] = useState('');
-    const [userId, setUserId] = useState('1');
 
     const dispatch = useDispatch();
-    const users = useSelector(selectAllUsers);
+    const userId = useSelector(state => state.authUser.user.id);
 
     const handlePostChange = (event) => {
         setPost(event.target.value);
-    }
-
-    const handleUserIdChange = (event) => {
-        setUserId(event.target.value);
     }
 
     const handleSubmit = (event) => {
@@ -30,10 +24,6 @@ export default function CreatePostForm() {
         dispatch(addNewPost({content: post, userId}));
         setPost('');
     }
-
-    const usersOptions = users.map(user => (
-        <option key={user.id} value={user.id}>{user.firstName + ' ' + user.lastName}</option>
-    ));
 
     return (
         <Card>
@@ -45,10 +35,6 @@ export default function CreatePostForm() {
                         placeholder="What are you celebrating?"
                         multiline required type="text"
                         onChange={handlePostChange} value={post}/>
-                    
-                    <select value={userId} onChange={handleUserIdChange}>
-                        {usersOptions}
-                    </select>
 
                     <Button
                         color="primary" fullWidth variant="contained"

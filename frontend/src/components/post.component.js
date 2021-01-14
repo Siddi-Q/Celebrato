@@ -35,14 +35,16 @@ export default function Post(props) {
 
     const handleDeletePostClick = () => {
         setAnchorEl(null);
-        dispatch(deletePost(props.id));
+        dispatch(deletePost(props.post.id));
     }
 
     const handleEditPostClick = () => {
         setAnchorEl(null);
         setOpen(true);
     }
-    const author = useSelector(state => state.users.find(user => user.id === props.userId));
+    
+    const user = useSelector(state => state.authUser.user);
+    const author = useSelector(state => state.users.find(user => user.id === props.post.user));
 
     return (
         <>
@@ -50,7 +52,7 @@ export default function Post(props) {
                 <Card>
                     <CardHeader
                         avatar={<Avatar>{author ? author.firstName.charAt(0) : "U"}</Avatar>}
-                        action={
+                        action={user.id === props.post.user &&
                         <IconButton onClick={handleMenuClick}>
                             <MoreHorizIcon />
                         </IconButton>
@@ -77,12 +79,12 @@ export default function Post(props) {
                         <MenuItem onClick={handleDeletePostClick}>Delete Post</MenuItem>
                     </Menu>
                     <CardContent>
-                        <Typography>{props.content}</Typography>
+                        <Typography>{props.post.content}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
 
-            <EditPostForm isOpen={open} setOpen={setOpen} id={props.id} content={props.content} />
+            <EditPostForm isOpen={open} setOpen={setOpen} id={props.post.id} content={props.post.content} />
         </>
     );
 }
