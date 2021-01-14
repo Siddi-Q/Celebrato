@@ -28,6 +28,17 @@ export default function makeServer() {
         routes() {
             this.namespace = 'mockApi';
 
+            this.post('/login', (schema, request) => {
+                const loginCred = JSON.parse(request.requestBody);
+                const user = schema.users.findBy(loginCred);
+                if(!Boolean(user)) {
+                    return {isAuth: false}
+                }
+                delete user.attrs.email;
+                delete user.attrs.password;
+                return {isAuth: true, user};
+            });
+
             this.delete('/posts/:id', (schema, request) => {
                 const id = request.params.id;
                 schema.posts.find(id).destroy();
