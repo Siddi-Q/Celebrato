@@ -45,6 +45,12 @@ export default function makeServer() {
                 return {isAuth: true, user};
             });
 
+            this.post('/logout', (schema, request) => {
+                const token = request.requestHeaders.authorization.slice(7);
+                const user = schema.users.findBy({'token': token });
+                user.update('token', '');
+            });
+
             this.delete('/posts/:id', (schema, request) => {
                 const id = request.params.id;
                 schema.posts.find(id).destroy();
