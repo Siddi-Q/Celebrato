@@ -28,29 +28,6 @@ export default function makeServer() {
         routes() {
             this.namespace = 'mockApi';
 
-            this.post('/login', (schema, request) => {
-                const loginCred = JSON.parse(request.requestBody);
-                const user = schema.users.findBy(loginCred);
-                if(!Boolean(user)) {
-                    return {isAuth: false}
-                }
-                
-                const token = "fake-jwt-token" + user.id;
-                user.token = token;
-                user.update('token', token);
-                console.log("user:", user);
-
-                delete user.attrs.email;
-                delete user.attrs.password;
-                return {isAuth: true, user};
-            });
-
-            this.post('/logout', (schema, request) => {
-                const token = request.requestHeaders.authorization.slice(7);
-                const user = schema.users.findBy({'token': token });
-                user.update('token', '');
-            });
-
             this.delete('/posts/:id', (schema, request) => {
                 const id = request.params.id;
                 schema.posts.find(id).destroy();
@@ -84,7 +61,30 @@ export default function makeServer() {
                 return users;
             });
 
-            this.post('/users', (schema, request) => {
+            this.post('/users/login', (schema, request) => {
+                const loginCred = JSON.parse(request.requestBody);
+                const user = schema.users.findBy(loginCred);
+                if(!Boolean(user)) {
+                    return {isAuth: false}
+                }
+                
+                const token = "fake-jwt-token" + user.id;
+                user.token = token;
+                user.update('token', token);
+                console.log("user:", user);
+
+                delete user.attrs.email;
+                delete user.attrs.password;
+                return {isAuth: true, user};
+            });
+
+            this.post('/users/logout', (schema, request) => {
+                const token = request.requestHeaders.authorization.slice(7);
+                const user = schema.users.findBy({'token': token });
+                user.update('token', '');
+            });
+
+            this.post('/users/register', (schema, request) => {
                 const userData = JSON.parse(request.requestBody);
                 const user = schema.create("user", userData);
                 delete user.attrs.email;

@@ -6,7 +6,7 @@ const initialState = {
 }
 
 export const login = createAsyncThunk('auth/login', async loginCred => {
-    const response = await fetch('/mockApi/login', {
+    const response = await fetch('/mockApi/users/login', {
         method: 'POST',
         body: JSON.stringify(loginCred),
         headers: {
@@ -18,7 +18,7 @@ export const login = createAsyncThunk('auth/login', async loginCred => {
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    await fetch('/mockApi/logout', {
+    await fetch('/mockApi/users/logout', {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')

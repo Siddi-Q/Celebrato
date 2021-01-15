@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const initialState = []
 
 export const addNewUser = createAsyncThunk('users/addNewUser', async newUser => {
-    const response = await fetch('/mockApi/users',  {
+    const response = await fetch('/mockApi/users/register',  {
         method: 'POST',
         body: JSON.stringify(newUser),
         'Content-Type': 'application/json'
