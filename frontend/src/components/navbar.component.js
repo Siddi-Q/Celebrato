@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { logout } from "../slices/authUserSlice";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,6 +26,8 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  const dispatch = useDispatch();
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -30,6 +35,11 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogoutClick = () => {
+    setAnchorEl(null);
+    dispatch(logout());
+  }
 
   return (
     <div className={classes.root}>
@@ -64,7 +74,7 @@ export default function Navbar() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>
