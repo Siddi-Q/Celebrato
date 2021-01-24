@@ -3,28 +3,22 @@ const express = require('express');
 
 const router = express.Router();
 
-router.post('/users/signup', (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
-    console.log('signup:', req.body);
+router.post('/users/signup', async (req, res) => {
+    try {
+        const { firstname, lastname, email, password } = req.body;
+        const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
-    db.query('SELECT * FROM users WHERE email = $1', [email])
-    .then(result => {
-        if(result.rows.length > 0) {
-            res.status(401).send('User already exists! Please try again!');
-        } else {
-            db.query('INSERT INTO users(firstname, lastname, email, password) VALUES($1, $2, $3, $4)', 
-            [firstname, lastname, email, password])
-            .then(result => res.status(201).send('Signed up!'))
-            .catch(err => {
-                console.error("inside err:", err);
-                res.status(500).send('Server error!');
-            })
+        if(rows.length > 0) {
+            return res.status(401).send('User already exists! Please try again!');
         }
-    })
-    .catch(err => {
-        console.error("outside err:", err);
-        res.status(500).send('server error!');
-    })
+
+        await db.query('INSERT INTO users(firstname, lastname, email, password) VALUES($1, $2, $3, $4)', 
+        [firstname, lastname, email, password]);
+
+        res.status(201).send('Signed up!');
+    } catch(err) {
+        res.status(500).send('Server error!');
+    }
 });
 
 router.post('/users/login', (req, res) => {
