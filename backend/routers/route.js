@@ -21,9 +21,23 @@ router.post('/users/signup', async (req, res) => {
     }
 });
 
-router.post('/users/login', (req, res) => {
-    console.log('login:', req.body);
-    res.status(200).send('logged in');
+router.post('/users/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        if(rows.length === 0) {
+            return res.status(401).send('Incorrect email or password!');
+        }
+
+        if(rows[0].password !== password) {
+            return res.status(401).send('Incorrect email or password!');
+        }
+
+        res.status(200).send('logged in');
+    } catch(err) {
+        res.status(500).send('Server error!');
+    }
 });
 
 router.post('/users/logout', (req, res) => {
