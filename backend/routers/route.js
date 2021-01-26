@@ -1,6 +1,7 @@
 const db = require('../db/db');
 const bcrypt = require('bcryptjs');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -39,7 +40,9 @@ router.post('/users/login', async (req, res) => {
             return res.status(401).send('Incorrect email or password!');
         }
 
-        res.status(200).send('logged in');
+        const authToken = jwt.sign({ id: rows[0].user_id}, process.env.jwtKey);
+
+        res.status(200).send({ authToken });
     } catch(err) {
         res.status(500).send('Server error!');
     }
