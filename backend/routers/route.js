@@ -1,4 +1,5 @@
 const db = require('../db/db');
+const bcrypt = require('bcryptjs');
 const express = require('express');
 
 const router = express.Router();
@@ -12,8 +13,10 @@ router.post('/users/signup', async (req, res) => {
             return res.status(401).send('User already exists! Please try again!');
         }
 
+        const hashedPassword = await bcrypt.hash(password, 8);
+
         await db.query('INSERT INTO users(firstname, lastname, email, password) VALUES($1, $2, $3, $4)', 
-        [firstname, lastname, email, password]);
+        [firstname, lastname, email, hashedPassword]);
 
         res.status(201).send('Signed up!');
     } catch(err) {
@@ -30,7 +33,9 @@ router.post('/users/login', async (req, res) => {
             return res.status(401).send('Incorrect email or password!');
         }
 
-        if(rows[0].password !== password) {
+        const isMatch = await bcrypt.compare(password, rows[0].password);
+
+        if(!isMatch) {
             return res.status(401).send('Incorrect email or password!');
         }
 
