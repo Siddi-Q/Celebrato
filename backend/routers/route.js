@@ -66,7 +66,6 @@ router.delete('/posts/:id', async (req, res) => {
 router.get('/posts', async (req, res) => {
     try {
         const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id;');
-        console.log(rows);
         res.status(200).send({ posts: rows });
     } catch(err) {
         res.status(500).send('Server error!');
@@ -76,10 +75,8 @@ router.get('/posts', async (req, res) => {
 router.post('/posts', async (req, res) => {
     try {
         const { user_id, content, date } = req.body;
-        await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3)', 
-        [user_id, content, date]);
-
-        res.status(200).send('Success!');
+        const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [user_id, content, date]);
+        res.status(200).send({ post: rows[0] });
     } catch(err) {
         res.status(500).send('Server error!');
     }
