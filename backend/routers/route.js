@@ -5,6 +5,15 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
+router.get('/users', async (req, res) => {
+    try {
+        const { rows } = await db.query('SELECT user_id, firstname, lastname FROM users');
+        res.status(200).send({ users: rows });
+    } catch(err) {
+        res.status(500).send('Server error!');
+    }
+});
+
 router.post('/users/signup', async (req, res) => {
     try {
         const { firstname, lastname, email, password } = req.body;
