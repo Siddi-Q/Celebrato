@@ -1,11 +1,13 @@
-const db = require('../db/db');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 
+const db = require('../db/db');
+const isLoggedIn = require('../middleware/auth');
+
 const router = express.Router();
 
-router.get('/users', async (req, res) => {
+router.get('/users', isLoggedIn, async (req, res) => {
     try {
         const { rows } = await db.query('SELECT user_id, firstname, lastname FROM users');
         res.status(200).send({ users: rows });
@@ -62,7 +64,7 @@ router.post('/users/logout', (req, res) => {
     res.send('logged out');
 });
 
-router.delete('/posts/:id', async (req, res) => {
+router.delete('/posts/:id', isLoggedIn, async (req, res) => {
     try {
         const { id } = req.params;
         await db.query('DELETE FROM posts WHERE post_id = $1', [id]);
@@ -72,7 +74,7 @@ router.delete('/posts/:id', async (req, res) => {
     }
 });
 
-router.get('/posts', async (req, res) => {
+router.get('/posts', isLoggedIn, async (req, res) => {
     try {
         const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id;');
         res.status(200).send({ posts: rows });
@@ -81,7 +83,7 @@ router.get('/posts', async (req, res) => {
     }
 });
 
-router.post('/posts', async (req, res) => {
+router.post('/posts', isLoggedIn, async (req, res) => {
     try {
         const { user_id, content, date } = req.body;
         const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [user_id, content, date]);
@@ -91,7 +93,7 @@ router.post('/posts', async (req, res) => {
     }
 });
 
-router.put('/posts/:id', async (req, res) => {
+router.put('/posts/:id', isLoggedIn, async (req, res) => {
     try {
         const { content } = req.body;
         const { id } = req.params;
