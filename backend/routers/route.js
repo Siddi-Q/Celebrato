@@ -85,4 +85,17 @@ router.post('/posts', async (req, res) => {
     }
 });
 
+router.put('/posts/:id', async (req, res) => {
+    try {
+        const { content } = req.body;
+        const { id } = req.params;
+
+        const { rows } = await db.query('UPDATE posts SET content = $1 WHERE post_id = $2 RETURNING *', [content, id]);
+        res.status(200).send({post: rows[0]});
+    } catch(err) {
+        console.log(err.message);
+        res.status(500).send('Server error!');
+    }
+});
+
 module.exports = router;
