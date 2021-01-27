@@ -63,4 +63,16 @@ router.get('/posts', async (req, res) => {
     }
 });
 
+router.post('/posts', async (req, res) => {
+    try {
+        const { user_id, content, date } = req.body;
+        await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3)', 
+        [user_id, content, date]);
+
+        res.status(200).send('Success!');
+    } catch(err) {
+        res.status(500).send('Server error!');
+    }
+});
+
 module.exports = router;
