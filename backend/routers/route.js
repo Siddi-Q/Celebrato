@@ -53,4 +53,14 @@ router.post('/users/logout', (req, res) => {
     res.send('logged out');
 });
 
+router.get('/posts', async (req, res) => {
+    try {
+        const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id;');
+        console.log(rows);
+        res.status(200).send({ posts: rows });
+    } catch(err) {
+        res.status(500).send('Server error!');
+    }
+});
+
 module.exports = router;
