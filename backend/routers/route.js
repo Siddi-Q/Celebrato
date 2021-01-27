@@ -53,6 +53,16 @@ router.post('/users/logout', (req, res) => {
     res.send('logged out');
 });
 
+router.delete('/posts/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await db.query('DELETE FROM posts WHERE post_id = $1', [id]);
+        res.status(200).send({id});
+    } catch(err) {
+        res.status(500).send('Server error!');
+    }
+});
+
 router.get('/posts', async (req, res) => {
     try {
         const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id;');
