@@ -5,6 +5,7 @@ const isLoggedIn = (req, res, next) => {
     try {
         const authToken = req.header('Authorization').replace('Bearer ', '');
         const decodedToken = jwt.verify(authToken, process.env.jwtKey);
+        req.user_id = decodedToken.id;
         next();
     } catch(err) {
         res.status(401).send({ message: 'Authentication Error!' });
