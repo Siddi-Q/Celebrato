@@ -67,7 +67,12 @@ router.post('/users/logout', (req, res) => {
 router.delete('/posts/:id', isLoggedIn, async (req, res) => {
     try {
         const { id } = req.params;
-        await db.query('DELETE FROM posts WHERE post_id = $1', [id]);
+        const { rows } = await db.query('DELETE FROM posts WHERE post_id = $1 AND user_id = $2 RETURNING *', [id, req.user_id]);
+
+        if(rows.length === 0) {
+            return res.status(404).send('Post was not deleted!');
+        }
+
         res.status(200).send({id});
     } catch(err) {
         res.status(500).send('Server error!');
@@ -85,8 +90,8 @@ router.get('/posts', isLoggedIn, async (req, res) => {
 
 router.post('/posts', isLoggedIn, async (req, res) => {
     try {
-        const { user_id, content, date } = req.body;
-        const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [user_id, content, date]);
+        const { content, date } = req.body;
+        const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [req.user_id, content, date]);
         res.status(200).send({ post: rows[0] });
     } catch(err) {
         res.status(500).send('Server error!');
@@ -98,10 +103,14 @@ router.put('/posts/:id', isLoggedIn, async (req, res) => {
         const { content } = req.body;
         const { id } = req.params;
 
-        const { rows } = await db.query('UPDATE posts SET content = $1 WHERE post_id = $2 RETURNING *', [content, id]);
+        const { rows } = await db.query('UPDATE posts SET content = $1 WHERE post_id = $2 AND user_id = $3 RETURNING *', [content, id, req.user_id]);
+
+        if(rows.length === 0) {
+            return res.status(404).send('Post was not updated!');
+        }
+
         res.status(200).send({post: rows[0]});
     } catch(err) {
-        console.log(err.message);
         res.status(500).send('Server error!');
     }
 });
