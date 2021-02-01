@@ -1,20 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = []
 
 export const addNewUser = createAsyncThunk('users/addNewUser', async newUser => {
-    const response = await fetch('/mockApi/users/register',  {
-        method: 'POST',
-        body: JSON.stringify(newUser),
-        'Content-Type': 'application/json'
-    });
-    const data = await response.json();
+    const response = await axios.post('/mockApi/users/register', newUser);
+    const data = response.data;
     return data.user;
 });
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    const response = await fetch('/mockApi/users');
-    const data = await response.json();
+    const response = await axios.get('/mockApi/users');
+    const data = response.data;
     return data.users;
 });
 
