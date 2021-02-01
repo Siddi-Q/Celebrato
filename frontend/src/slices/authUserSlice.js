@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = {
     user: {},
@@ -6,22 +7,15 @@ const initialState = {
 }
 
 export const login = createAsyncThunk('auth/login', async loginCred => {
-    const response = await fetch('/mockApi/users/login', {
-        method: 'POST',
-        body: JSON.stringify(loginCred),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const data = await response.json();
+    const response = await axios.post('/mockApi/users/login', loginCred);
+    const data = response.data;
     return data;
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    await fetch('/mockApi/users/logout', {
-        method: 'POST',
+    await axios.post('/mockApi/users/logout', null, {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            Authorization: 'Bearer ' + localStorage.getItem('token')
         }
     });
 });

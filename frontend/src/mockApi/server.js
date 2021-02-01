@@ -79,7 +79,7 @@ export default function makeServer() {
             });
 
             this.post('/users/logout', (schema, request) => {
-                const token = request.requestHeaders.authorization.slice(7);
+                const token = request.requestHeaders.Authorization.slice(7);
                 const user = schema.users.findBy({'token': token });
                 user.update('token', '');
             });
