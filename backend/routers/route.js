@@ -27,10 +27,14 @@ router.post('/users/signup', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 8);
 
-        await db.query('INSERT INTO users(firstname, lastname, email, password) VALUES($1, $2, $3, $4)', 
+        const result = await db.query('INSERT INTO users(firstname, lastname, email, password) VALUES($1, $2, $3, $4) RETURNING *', 
         [firstname, lastname, email, hashedPassword]);
 
-        res.status(201).send('Signed up!');
+        const user = result.rows[0];
+        delete user.email;
+        delete user.password;
+
+        res.status(201).send({ user });
     } catch(err) {
         res.status(500).send('Server error!');
     }
