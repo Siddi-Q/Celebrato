@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const isLoggedIn = (req, res, next) => {
     try {
-        const authToken = req.header('Authorization').replace('Bearer ', '');
+        const authToken = req.header('Authorization').slice(7);
         const decodedToken = jwt.verify(authToken, process.env.jwtKey);
         req.user_id = decodedToken.id;
         next();
