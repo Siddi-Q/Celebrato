@@ -88,7 +88,7 @@ router.delete('/posts/:id', isLoggedIn, async (req, res) => {
 
 router.get('/posts', isLoggedIn, async (req, res) => {
     try {
-        const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id;');
+        const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id');
         res.status(200).send({ posts: rows });
     } catch(err) {
         res.status(500).send('Server error!');
@@ -98,8 +98,14 @@ router.get('/posts', isLoggedIn, async (req, res) => {
 router.post('/posts', isLoggedIn, async (req, res) => {
     try {
         const { content, date } = req.body;
-        const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [req.user_id, content, date]);
-        res.status(200).send({ post: rows[0] });
+        // const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [req.user_id, content, date]);
+        const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING post_id', [req.user_id, content, date]);
+        const post_id = rows[0].post_id;
+
+        const postData = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id AND posts.post_id=$1', [post_id]);
+        const post = postData.rows[0];
+        
+        res.status(200).send({ post });
     } catch(err) {
         res.status(500).send('Server error!');
     }
