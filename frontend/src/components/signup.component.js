@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
 import { addNewUser } from '../slices/usersSlice';
 
 import Box from '@material-ui/core/Box';
@@ -48,37 +48,29 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
+    const classes = useStyles();
 
-    const handleFirstnameChange = (event) => {
-        setFirstname(event.target.value);
-    }
-
-    const handleLastnameChange = (event) => {
-        setLastname(event.target.value);
-    }
-
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    }
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    }   
+    const handleFirstnameChange = event => setFirstname(event.target.value);
+    const handleLastnameChange = event => setLastname(event.target.value);
+    const handleEmailChange = event => setEmail(event.target.value);
+    const handlePasswordChange = event => setPassword(event.target.value);   
 
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(addNewUser({firstname, lastname, email, password}));
+        setFirstname('');
+        setLastname('');
+        setEmail('');
+        setPassword('');
     }
-    
-    const classes = useStyles();
-    
+        
     return (
         <Grid container component="div" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={12} sm={4} md={7}>
+            <Grid item xs={12} sm={6} md={7}>
                 <Typography>Celebrato</Typography>
             </Grid>
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Typography component="h2" variant="h5">Sign up</Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
@@ -122,4 +114,4 @@ export default function Login() {
             </Grid>
         </Grid>
     );
-}
+};

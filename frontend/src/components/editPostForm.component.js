@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
 import { updatePost } from '../slices/postsSlice';
 
 import Button from '@material-ui/core/Button';
@@ -16,9 +16,7 @@ export default function EditPostForm(props) {
 
     const handleClose = () => props.setOpen(false);
 
-    const handlePostChange = (event) => {
-        setPost(event.target.value);
-    }
+    const handlePostChange = event => setPost(event.target.value);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -44,5 +42,5 @@ export default function EditPostForm(props) {
                 </form>
             </DialogContent>
         </Dialog>
-    )
-}
+    );
+};

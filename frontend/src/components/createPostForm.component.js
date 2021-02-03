@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
 import { addNewPost } from '../slices/postsSlice';
 
 import Button from '@material-ui/core/Button';
@@ -14,15 +13,11 @@ export default function CreatePostForm() {
     const [post, setPost] = useState('');
 
     const dispatch = useDispatch();
-    // const userId = useSelector(state => state.authUser.user.id);
 
-    const handlePostChange = (event) => {
-        setPost(event.target.value);
-    }
+    const handlePostChange = event => setPost(event.target.value);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // dispatch(addNewPost({content: post, userId}));
         dispatch(addNewPost({content: post, date: new Date()}));
         setPost('');
     }
@@ -47,4 +42,4 @@ export default function CreatePostForm() {
             </CardContent>
         </Card>
     );
-}
+};

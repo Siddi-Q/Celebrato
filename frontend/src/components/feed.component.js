@@ -1,24 +1,23 @@
 import React, { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-
 import { fetchPosts, selectAllPosts } from '../slices/postsSlice';
-
-import Post from './post.component';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 
+import Post from './post.component';
+
 export default function Feed() {
     const dispatch = useDispatch();
     const posts = useSelector(selectAllPosts);
-
     const postStatus = useSelector(state => state.posts.status);
 
     useEffect(() => {
         if(postStatus === 'idle') {
             dispatch(fetchPosts());
         }
-    }, [dispatch, postStatus])
+    }, [dispatch, postStatus]);
 
     const renderedPosts = posts.map(post => (
         <Post key={post.post_id} post={post}/>
@@ -39,6 +38,6 @@ export default function Feed() {
         );
     }
     else {
-        return <p>An error occurred!</p>
+        return <p>An error occurred!</p>;
     }
-}
+};

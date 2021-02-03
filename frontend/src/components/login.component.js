@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-
 import { login } from '../slices/authUserSlice';
 
 import Box from '@material-ui/core/Box';
@@ -47,32 +46,25 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
+    const classes = useStyles();
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    }
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    }
+    const handleEmailChange = event => setEmail(event.target.value);
+    const handlePasswordChange = event => setPassword(event.target.value);
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(email, password);
         dispatch(login({email, password}));
         setEmail('');
         setPassword('');
     }
 
-    const classes = useStyles();
-
     return (
-        <Grid container component="main" className={classes.root}>
+        <Grid container component="div" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={12} sm={4} md={7}>
+            <Grid item xs={12} sm={6} md={7}>
                 <Typography>Celebrato</Typography>
             </Grid>
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Typography component="h2" variant="h5">Log in</Typography>
                     <form className={classes.form} onSubmit={onSubmit}>
@@ -106,4 +98,4 @@ export default function Login() {
             </Grid>
         </Grid>
     );
-}
+};

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
+import { useDispatch } from "react-redux";
 import { logout } from "../slices/authUserSlice";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -22,11 +22,10 @@ const useStyles = makeStyles({
 });
 
 export default function Navbar() {
-  const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
 
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -70,7 +69,7 @@ export default function Navbar() {
                 vertical: "top",
                 horizontal: "right"
               }}
-              open={open}
+              open={Boolean(anchorEl)}
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
@@ -81,4 +80,4 @@ export default function Navbar() {
       </AppBar>
     </div>
   );
-}
+};
