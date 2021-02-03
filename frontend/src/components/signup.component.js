@@ -42,19 +42,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
 
-    const handleFirstNameChange = (event) => {
-        setFirstName(event.target.value);
+    const handleFirstnameChange = (event) => {
+        setFirstname(event.target.value);
     }
 
-    const handleLastNameChange = (event) => {
-        setLastName(event.target.value);
+    const handleLastnameChange = (event) => {
+        setLastname(event.target.value);
     }
 
     const handleEmailChange = (event) => {
@@ -67,7 +67,7 @@ export default function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(addNewUser({firstName, lastName, email, password}));
+        dispatch(addNewUser({firstname, lastname, email, password}));
     }
     
     const classes = useStyles();
@@ -86,12 +86,12 @@ export default function Login() {
                             autoFocus autoComplete="given-name"
                             fullWidth margin="normal" variant="outlined"
                             label="First Name" type="text" required
-                            onChange={handleFirstNameChange} value={firstName}/>
+                            onChange={handleFirstnameChange} value={firstname}/>
                         <TextField
                             autoComplete="family-name"
                             fullWidth margin="normal" variant="outlined"
                             label="Last Name" type="text" required
-                            onChange={handleLastNameChange} value={lastName}/>
+                            onChange={handleLastnameChange} value={lastname}/>
                         <TextField
                             autoComplete="email"
                             fullWidth margin="normal" variant="outlined"
