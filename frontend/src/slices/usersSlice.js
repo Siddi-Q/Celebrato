@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import { addNewUserService, fetchUsersService } from '../services/usersService';
 
 const initialState = []
 
 export const addNewUser = createAsyncThunk('users/addNewUser', async newUser => {
-    const response = await axios.post('/mockApi/users/register', newUser);
+    // const response = await axios.post('/mockApi/users/register', newUser);
+    const response = await addNewUserService(newUser);
     const data = response.data;
     return data.user;
 });
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    const response = await axios.get('/mockApi/users');
+    // const response = await axios.get('/mockApi/users');
+    const response = await fetchUsersService();
     const data = response.data;
     return data.users;
 });
