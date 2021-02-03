@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, selectAllPosts } from '../slices/postsSlice';
+import { fetchPosts, selectAllPosts, selectPostStatus } from '../slices/postsSlice';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -11,7 +11,7 @@ import Post from './post.component';
 export default function Feed() {
     const dispatch = useDispatch();
     const posts = useSelector(selectAllPosts);
-    const postStatus = useSelector(state => state.posts.status);
+    const postStatus = useSelector(selectPostStatus);
 
     useEffect(() => {
         if(postStatus === 'idle') {
