@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import {addNewPostService, deletePostService, fetchPostsService, updatePostService} from '../services/postsService';
 
 const initialState = {
     posts: [],
@@ -8,28 +9,36 @@ const initialState = {
 }
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async newPost => {
-    const response = await axios.post('/mockApi/posts', newPost);
+    // const response = await axios.post('/mockApi/posts', newPost);
+    const response = await addNewPostService(newPost);
+
     const data = response.data;
     return data.post;
 });
 
 export const deletePost = createAsyncThunk('posts/deletePost', async postId => {
-    const response = await axios.delete(`/mockApi/posts/${postId}`);
+    // const response = await axios.delete(`/mockApi/posts/${postId}`);
+    const response = await deletePostService(postId);
     const data = response.data;
+    console.log("delete data", data);
     return data;
 });
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-    const response = await axios.get('/mockApi/posts');
+    // const response = await axios.get('/mockApi/posts');
+    const response = await fetchPostsService();
+
     const data = response.data;
+    console.log(data.posts);
     return data.posts;
 });
 
 export const updatePost = createAsyncThunk('posts/updatePost', async post => {
-    const id = post.id;
-    delete post.id;
+    // const id = post.id;
+    // delete post.id;
 
-    const response = await axios.put(`/mockApi/posts/${id}`, post);
+    // const response = await axios.put(`/mockApi/posts/${id}`, post);
+    const response = await updatePostService(post);
     const data = response.data;
     return data.post;
 });
