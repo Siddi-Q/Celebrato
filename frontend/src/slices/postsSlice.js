@@ -52,7 +52,7 @@ const postsSlice = createSlice({
             state.posts.push(action.payload)
         },
         [deletePost.fulfilled]: (state, action) => {
-            state.posts = state.posts.filter(post => post.id !== action.payload.id)
+            state.posts = state.posts.filter(post => post.post_id !== action.payload.id)
         },
         [fetchPosts.pending]: (state, action) => {
             state.status = 'loading'
