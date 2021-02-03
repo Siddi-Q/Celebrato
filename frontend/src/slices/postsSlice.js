@@ -66,8 +66,8 @@ const postsSlice = createSlice({
             state.error = action.error.message
         },
         [updatePost.fulfilled]: (state, action) => {
-            const { id, content } = action.payload;
-            const existingPost = state.posts.find(post => post.id === id);
+            const { post_id, content } = action.payload;
+            const existingPost = state.posts.find(post => post.post_id === post_id);
             if(existingPost) {
                 existingPost.content = content;
             }
