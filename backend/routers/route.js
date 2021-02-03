@@ -56,8 +56,11 @@ router.post('/users/login', async (req, res) => {
         }
 
         const authToken = jwt.sign({ id: rows[0].user_id}, process.env.jwtKey);
+        const user = rows[0];
+        delete user.email;
+        delete user.password;
 
-        res.status(200).send({ authToken });
+        res.status(200).send({ user, authToken });
     } catch(err) {
         res.status(500).send('Server error!');
     }
