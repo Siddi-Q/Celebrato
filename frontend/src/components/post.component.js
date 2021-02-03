@@ -35,7 +35,7 @@ export default function Post(props) {
 
     const handleDeletePostClick = () => {
         setAnchorEl(null);
-        dispatch(deletePost(props.post.id));
+        dispatch(deletePost(props.post.post_id));
     }
 
     const handleEditPostClick = () => {
@@ -44,21 +44,22 @@ export default function Post(props) {
     }
     
     const user = useSelector(state => state.authUser.user);
-    const author = useSelector(state => state.users.find(user => user.id === props.post.user));
+    // const author = useSelector(state => state.users.find(user => user.id === props.post.user));
 
+    const { post } = props;
     return (
         <>
             <Grid item xs={12} sm={10} md={7}>
                 <Card>
                     <CardHeader
-                        avatar={<Avatar>{author ? author.firstName.charAt(0) : "U"}</Avatar>}
-                        action={user.id === props.post.user &&
+                        avatar={<Avatar>{post.firstname ? post.firstname.charAt(0) : "U"}</Avatar>}
+                        action={user.user_id === post.user_id &&
                         <IconButton onClick={handleMenuClick}>
                             <MoreHorizIcon />
                         </IconButton>
                         }
-                        title={author ? author.firstName + ' ' + author.lastName : "Unknown Author"}
-                        subheader={props.date}
+                        title={post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : "Unknown Author"}
+                        subheader={post.date}
                     />
                     <Menu
                         anchorEl={anchorEl}
@@ -79,12 +80,12 @@ export default function Post(props) {
                         <MenuItem onClick={handleDeletePostClick}>Delete Post</MenuItem>
                     </Menu>
                     <CardContent>
-                        <Typography>{props.post.content}</Typography>
+                        <Typography>{post.content}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
 
-            <EditPostForm isOpen={open} setOpen={setOpen} id={props.post.id} content={props.post.content} />
+            <EditPostForm isOpen={open} setOpen={setOpen} id={post.post_id} content={post.content} />
         </>
     );
 }

@@ -21,7 +21,7 @@ function App() {
             <Switch>
                 <Route exact path={["/", "/login"]} render={() => isAuth ? <Redirect to="/home"/> : <Login /> } />
                 <Route exact path="/signup" render={() => isAuth ? <Redirect to="/home"/> : <Signup /> } />
-                <Route exact path="/home" render={() => isAuth ? <Home /> : <Login /> } />
+                <Route exact path="/home" render={() => isAuth ? <Home /> : <Redirect to="/login" /> } />
             </Switch>
         </Router>
     );

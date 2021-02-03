@@ -8,9 +8,9 @@ import { Provider } from 'react-redux';
 
 import { fetchUsers } from './slices/usersSlice';
 
-import makeServer from './mockApi/server'
+// import makeServer from './mockApi/server'
 
-makeServer();
+// makeServer();
 store.dispatch(fetchUsers());
 
 ReactDOM.render(
