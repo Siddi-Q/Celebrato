@@ -73,14 +73,14 @@ router.post('/users/logout', (req, res) => {
 
 router.delete('/posts/:id', isLoggedIn, async (req, res) => {
     try {
-        const { id } = req.params;
+        const id = Number(req.params.id);
         const { rows } = await db.query('DELETE FROM posts WHERE post_id = $1 AND user_id = $2 RETURNING *', [id, req.user_id]);
 
         if(rows.length === 0) {
             return res.status(404).send('Post was not deleted!');
         }
 
-        res.status(200).send({id});
+        res.status(200).send({id: rows[0].post_id});
     } catch(err) {
         res.status(500).send('Server error!');
     }
