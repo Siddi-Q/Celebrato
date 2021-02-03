@@ -67,7 +67,6 @@ router.post('/users/login', async (req, res) => {
 });
 
 router.post('/users/logout', (req, res) => {
-    console.log('logout:', req.body);
     res.send('logged out');
 });
 
@@ -98,7 +97,6 @@ router.get('/posts', isLoggedIn, async (req, res) => {
 router.post('/posts', isLoggedIn, async (req, res) => {
     try {
         const { content, date } = req.body;
-        // const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING *', [req.user_id, content, date]);
         const { rows } = await db.query('INSERT INTO posts(user_id, content, date) VALUES($1, $2, $3) RETURNING post_id', [req.user_id, content, date]);
         const post_id = rows[0].post_id;
 
