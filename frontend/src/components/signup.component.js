@@ -63,12 +63,12 @@ export default function Login() {
         setEmail('');
         setPassword('');
     }
-        
+    
     return (
         <Grid container component="div" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={12} sm={6} md={7}>
-                <Typography>Celebrato</Typography>
+            <Grid item xs={12} sm={6} md={7} container alignItems="center" justify="center">
+                <Typography variant="h1" style={{color: 'orange'}}>Celebrato</Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
