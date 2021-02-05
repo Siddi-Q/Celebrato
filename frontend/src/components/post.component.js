@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../slices/postsSlice';
 
+import { formatDistanceToNow, parseISO } from 'date-fns'
+
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -56,7 +58,7 @@ export default function Post(props) {
                         </IconButton>
                         }
                         title={post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : "Unknown Author"}
-                        subheader={post.date}
+                        subheader={formatDistanceToNow(parseISO(post.date))}
                     />
                     <Menu
                         anchorEl={anchorEl}
