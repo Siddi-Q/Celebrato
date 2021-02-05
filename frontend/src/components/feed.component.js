@@ -13,13 +13,15 @@ export default function Feed() {
     const posts = useSelector(selectAllPosts);
     const postStatus = useSelector(selectPostStatus);
 
+    const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date));
+
     useEffect(() => {
         if(postStatus === 'idle') {
             dispatch(fetchPosts());
         }
     }, [dispatch, postStatus]);
 
-    const renderedPosts = posts.map(post => (
+    const renderedPosts = orderedPosts.map(post => (
         <Post key={post.post_id} post={post}/>
     ));
 
