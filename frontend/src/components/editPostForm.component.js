@@ -9,13 +9,24 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 import CloseIcon from '@material-ui/icons/Close'
+
+const useStyles = makeStyles((theme) => ({
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    }
+}));
 
 export default function EditPostForm(props) {
     const [post, setPost] = useState(props.content);
 
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     const handleClose = () => props.setOpen(false);
 
@@ -30,7 +41,7 @@ export default function EditPostForm(props) {
     return (
         <Dialog open={props.isOpen} onClose={handleClose}>
             <DialogTitle align='center'>Edit Post
-                <IconButton onClick={handleClose} style={{position: 'absolute', right: '8px', top: '8px'}}>
+                <IconButton onClick={handleClose} className={classes.closeButton}>
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
