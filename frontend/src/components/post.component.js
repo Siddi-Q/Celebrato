@@ -58,7 +58,7 @@ export default function Post(props) {
                         </IconButton>
                         }
                         title={post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : "Unknown Author"}
-                        subheader={formatDistanceToNow(parseISO(post.date))}
+                        subheader={formatDistanceToNow(parseISO(post.date)) + ' ago'}
                     />
                     <Menu
                         anchorEl={anchorEl}
