@@ -9,7 +9,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -48,41 +47,39 @@ export default function Post(props) {
 
     return (
         <>
-            <Grid item xs={12} sm={10} md={7}>
-                <Card>
-                    <CardHeader
-                        avatar={<Avatar>{post.firstname ? post.firstname.charAt(0) : "U"}</Avatar>}
-                        action={user.user_id === post.user_id &&
-                        <IconButton onClick={handleMenuClick}>
-                            <MoreHorizIcon />
-                        </IconButton>
-                        }
-                        title={post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : "Unknown Author"}
-                        subheader={formatDistanceToNow(parseISO(post.date)) + ' ago'}
-                    />
-                    <Menu
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "right"
-                          }}
-                        getContentAnchorEl={null}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right"
+            <Card>
+                <CardHeader
+                    avatar={<Avatar>{post.firstname ? post.firstname.charAt(0) : "U"}</Avatar>}
+                    action={user.user_id === post.user_id &&
+                    <IconButton onClick={handleMenuClick}>
+                        <MoreHorizIcon />
+                    </IconButton>
+                    }
+                    title={post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : "Unknown Author"}
+                    subheader={formatDistanceToNow(parseISO(post.date)) + ' ago'}
+                />
+                <Menu
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right"
                         }}
-                        open={Boolean(anchorEl)}
-                        onClose={handleMenuClose}
-                    >
-                        <MenuItem onClick={handleEditPostClick}>Edit Post</MenuItem>
-                        <MenuItem onClick={handleDeletePostClick}>Delete Post</MenuItem>
-                    </Menu>
-                    <CardContent>
-                        <Typography>{post.content}</Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
+                    getContentAnchorEl={null}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right"
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                >
+                    <MenuItem onClick={handleEditPostClick}>Edit Post</MenuItem>
+                    <MenuItem onClick={handleDeletePostClick}>Delete Post</MenuItem>
+                </Menu>
+                <CardContent>
+                    <Typography>{post.content}</Typography>
+                </CardContent>
+            </Card>
 
             <EditPostForm isOpen={open} setOpen={setOpen} id={post.post_id} content={post.content} />
         </>

@@ -10,8 +10,8 @@ export default function Home() {
     return (
         <>
             <Navbar />
-            <Grid container justify="center" spacing={2} style={{marginTop: 16}}>
-                <Grid item xs={12} sm={10} md={7}>
+            <Grid container justify="center" style={{marginTop: 16}}>
+                <Grid item xs={11} sm={10} md={7} style={{marginBottom: 16}}>
                     <CreatePostForm />
                 </Grid>
                 <Feed />

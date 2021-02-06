@@ -5,6 +5,7 @@ import { fetchPosts, selectAllPosts, selectPostStatus } from '../slices/postsSli
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 import Post from './post.component';
 
@@ -22,12 +23,14 @@ export default function Feed() {
     }, [dispatch, postStatus]);
 
     const renderedPosts = orderedPosts.map(post => (
-        <Post key={post.post_id} post={post}/>
+        <Grid key={post.post_id} item xs={11} sm={10} md={7} style={{marginBottom: 16}}>
+            <Post post={post}/>
+        </Grid>
     ));
 
     if(postStatus === 'loading') {
         return (
-            <Grid item xs={12} sm={10} md={7} style={{textAlign: "center"}}>
+            <Grid item xs={11} sm={10} md={7} style={{textAlign: "center"}}>
                 <CircularProgress />
             </Grid>
         );
@@ -35,11 +38,18 @@ export default function Feed() {
     else if(postStatus === 'succeeded') {
         return (
             <>
-                {renderedPosts}
+                {renderedPosts.length ? renderedPosts : 
+                <Grid item xs={11} sm={10} md={7} style={{textAlign: "center"}}>
+                    <Typography variant="h5">There are no posts to show! Why don't you create the first?</Typography>
+                </Grid>}
             </>
         );
     }
     else {
-        return <p>An error occurred!</p>;
+        return (
+            <Grid item xs={11} sm={10} md={7} style={{textAlign: "center"}}>
+                <p>Error - Could not load posts!</p>
+            </Grid>
+        );
     }
 };
