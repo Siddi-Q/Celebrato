@@ -7,7 +7,10 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+
+import CloseIcon from '@material-ui/icons/Close'
 
 export default function EditPostForm(props) {
     const [post, setPost] = useState(props.content);
@@ -26,7 +29,11 @@ export default function EditPostForm(props) {
 
     return (
         <Dialog open={props.isOpen} onClose={handleClose}>
-            <DialogTitle align='center'>Edit Post</DialogTitle>
+            <DialogTitle align='center'>Edit Post
+                <IconButton onClick={handleClose} style={{position: 'absolute', right: '8px', top: '8px'}}>
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
             <DialogContent dividers>
                 <form onSubmit={handleSubmit}>
                     <TextField 
