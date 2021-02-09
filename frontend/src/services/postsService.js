@@ -17,7 +17,7 @@ export const deletePostService = (postId) => {
 };
 
 export const fetchPostsService = () => {
-    return axios.get('http://localhost:5000/posts', {
+    return axios.get('http://localhost:5000/posts/all', {
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token')
         }

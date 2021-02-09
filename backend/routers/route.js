@@ -85,7 +85,7 @@ router.delete('/posts/:id', isLoggedIn, async (req, res) => {
     }
 });
 
-router.get('/posts', isLoggedIn, async (req, res) => {
+router.get('/posts/all', isLoggedIn, async (req, res) => {
     try {
         const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id');
         res.status(200).send({ posts: rows });
