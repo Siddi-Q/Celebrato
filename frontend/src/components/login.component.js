@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { login } from '../slices/authUserSlice';
 
 import Box from '@material-ui/core/Box';
@@ -51,11 +52,14 @@ export default function Login() {
     const handleEmailChange = event => setEmail(event.target.value);
     const handlePasswordChange = event => setPassword(event.target.value);
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
-        dispatch(login({email, password}));
-        setEmail('');
-        setPassword('');
+        try {
+            const resultAction = await dispatch(login({email, password}));
+            unwrapResult(resultAction);
+        } catch(err) {
+            console.error("Failed to signin!", err);
+        }
     }
 
     return (
