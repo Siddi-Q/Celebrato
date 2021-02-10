@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { addNewUser } from '../slices/usersSlice';
+import { signup } from '../slices/authUserSlice';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -57,7 +57,7 @@ export default function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(addNewUser({firstname, lastname, email, password}));
+        dispatch(signup({firstname, lastname, email, password}));
         setFirstname('');
         setLastname('');
         setEmail('');
