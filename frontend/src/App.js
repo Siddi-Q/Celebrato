@@ -1,14 +1,15 @@
 import React from 'react';
-
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from './slices/authUserSlice';
 
 import Login from './components/login.component';
 import Signup from './components/signup.component';
 import Home from './components/home.component';
-import { useSelector } from 'react-redux';
 
 function App() {
-    const isAuth = useSelector(state => state.authUser.isAuthenticated);
+    const isAuth = useSelector(selectIsAuthenticated);
 
     return (
         <Router>
