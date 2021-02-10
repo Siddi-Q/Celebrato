@@ -30,11 +30,12 @@ router.post('/users/signup', async (req, res) => {
         const result = await db.query('INSERT INTO users(firstname, lastname, email, password) VALUES($1, $2, $3, $4) RETURNING *', 
         [firstname, lastname, email, hashedPassword]);
 
+        const authToken = jwt.sign({ id: result.rows[0].user_id }, process.env.jwtKey);
         const user = result.rows[0];
         delete user.email;
         delete user.password;
 
-        res.status(201).send({ user });
+        res.status(201).send({ user, authToken });
     } catch(err) {
         res.status(500).send('Server error!');
     }
@@ -55,7 +56,7 @@ router.post('/users/login', async (req, res) => {
             return res.status(401).send('Incorrect email or password!');
         }
 
-        const authToken = jwt.sign({ id: rows[0].user_id}, process.env.jwtKey);
+        const authToken = jwt.sign({ id: rows[0].user_id }, process.env.jwtKey);
         const user = rows[0];
         delete user.email;
         delete user.password;
