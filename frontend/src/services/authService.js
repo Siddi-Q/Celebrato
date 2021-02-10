@@ -11,3 +11,7 @@ export const logoutService = () => {
         }
     });
 };
+
+export const signupService = (newUserInfo) => {
+    return axios.post('http://localhost:5000/users/signup', newUserInfo);
+};
