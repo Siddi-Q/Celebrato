@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { logout } from "../slices/authUserSlice";
@@ -7,6 +7,7 @@ import { logout } from "../slices/authUserSlice";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
+import Link from '@material-ui/core/Link';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -19,7 +20,6 @@ const useStyles = makeStyles({
   },
   title: {
     flexGrow: 1,
-    color: "orange"
   }
 });
 
@@ -52,8 +52,8 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Celebrato
+          <Typography className={classes.title}>
+            <Link component={RouterLink} variant="h6" to="/home" style={{color: "orange", textDecoration: "none"}}>Celebrato</Link>
           </Typography>
           <div>
             <IconButton
