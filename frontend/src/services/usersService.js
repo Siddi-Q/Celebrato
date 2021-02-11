@@ -11,3 +11,11 @@ export const fetchUsersService = () => {
         }
     });
 };
+
+export const fetchAUsersPosts = (userId) => {
+    return axios.get(`http://localhost:5000/posts/${userId}`, {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    });
+};
