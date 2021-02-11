@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { logout } from "../slices/authUserSlice";
@@ -26,6 +27,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
 
   const handleMenu = (event) => {
@@ -35,6 +37,11 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleProfileClick = () => {
+    setAnchorEl(null);
+    history.push("/profile");
+  }
 
   const handleLogoutClick = () => {
     setAnchorEl(null);
@@ -73,7 +80,7 @@ export default function Navbar() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
               <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
             </Menu>
           </div>
