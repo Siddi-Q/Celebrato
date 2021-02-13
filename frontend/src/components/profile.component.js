@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../slices/authUserSlice';
 import { fetchAUsersPosts } from '../services/usersService'; 
 
+import Grid from '@material-ui/core/Grid';
+
 import Navbar from './navbar.component';
+import Post from './post.component';
 
 export default function Profile() {
     const [posts, setPosts] = useState([]);
@@ -23,9 +26,21 @@ export default function Profile() {
     return (
         <>
             <Navbar />
-            <h1>Profile</h1>
-            <h2>{user.firstname + " " + user.lastname} </h2>
-            {posts.map(post => <p>{post.date} - {post.content}</p>)}
+            <Grid container justify="center" style={{marginTop: 16}}>
+                <Grid item xs={11} sm={10} md={7}>
+                    <h2>{user.firstname + " " + user.lastname} </h2>
+                </Grid>
+                
+                {posts.map(post => {
+                    post.firstname = user.firstname;
+                    post.lastname = user.lastname;
+                    return (
+                        <Grid key={post.post_id} item xs={11} sm={10} md={7} style={{marginBottom: 16}}>
+                            <Post post={post}/>
+                        </Grid>
+                    );
+                })}
+            </Grid>
         </>
     );
 }
