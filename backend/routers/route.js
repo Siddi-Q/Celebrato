@@ -98,7 +98,7 @@ router.get('/posts/all', isLoggedIn, async (req, res) => {
 router.get('/posts/:user_id', isLoggedIn, async (req, res) => {
     try {
         const user_id = Number(req.params.user_id);
-        const { rows } = await db.query('SELECT * FROM posts WHERE user_id = $1', [user_id]);
+        const { rows } = await db.query('SELECT users.user_id, firstname, lastname, post_id, content, date FROM users INNER JOIN posts ON users.user_id=posts.user_id WHERE users.user_id=$1', [user_id]);
         res.status(200).send({ posts: rows });
     } catch(err) {
         res.status(500).send('Server error!');
