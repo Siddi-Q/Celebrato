@@ -31,15 +31,12 @@ export default function Profile() {
                     <h2>{user.firstname + " " + user.lastname} </h2>
                 </Grid>
                 
-                {posts.map(post => {
-                    post.firstname = user.firstname;
-                    post.lastname = user.lastname;
-                    return (
+                {posts.map(post => (
                         <Grid key={post.post_id} item xs={11} sm={10} md={7} style={{marginBottom: 16}}>
                             <Post post={post}/>
                         </Grid>
-                    );
-                })}
+                    )
+                )}
             </Grid>
         </>
     );
