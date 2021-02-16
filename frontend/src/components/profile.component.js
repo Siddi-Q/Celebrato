@@ -21,14 +21,14 @@ export default function Profile() {
         .catch(error => {
             console.log("error:", error);
         })
-    }, [posts, user.user_id]);
+    }, [user.user_id]);
 
     return (
         <>
             <Navbar />
             <Grid container justify="center" style={{marginTop: 16}}>
                 <Grid item xs={11} sm={10} md={7}>
-                    <h2>{user.firstname + " " + user.lastname} </h2>
+                    <h2 style={{textAlign: "center"}}>{user.firstname + " " + user.lastname} </h2>
                 </Grid>
                 
                 {posts.map(post => (
