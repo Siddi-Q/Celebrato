@@ -16,12 +16,12 @@ export default function Profile() {
     useEffect(() => {
         fetchAUsersPosts(user.user_id)
         .then(res => {
-            setPosts(res.data.posts);
+            setPosts(res.data.posts.sort((a, b) => b.date.localeCompare(a.date)));
         })
         .catch(error => {
             console.log("error:", error);
         })
-    }, [user.user_id]);
+    }, [posts, user.user_id]);
 
     return (
         <>
