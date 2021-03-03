@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../slices/authUserSlice';
-import { fetchAUsersPosts } from '../services/usersService'; 
+import { fetchPosts, selectAllPosts, selectPostStatus } from '../slices/postsSlice';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -10,18 +10,18 @@ import Navbar from './navbar.component';
 import Post from './post.component';
 
 export default function Profile() {
-    const [posts, setPosts] = useState([]);
+    const dispatch = useDispatch();
     const user = useSelector(selectUser);
+    const posts = useSelector(selectAllPosts).filter(post => post.user_id === user.user_id);
+    const postStatus = useSelector(selectPostStatus);
+
+    const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date));
 
     useEffect(() => {
-        fetchAUsersPosts(user.user_id)
-        .then(res => {
-            setPosts(res.data.posts.sort((a, b) => b.date.localeCompare(a.date)));
-        })
-        .catch(error => {
-            console.log("error:", error);
-        })
-    }, [user.user_id]);
+        if(postStatus === 'idle') {
+            dispatch(fetchPosts());
+        }
+    }, [dispatch, postStatus]);
 
     return (
         <>
@@ -31,7 +31,7 @@ export default function Profile() {
                     <h2 style={{textAlign: "center"}}>{user.firstname + " " + user.lastname} </h2>
                 </Grid>
                 
-                {posts.map(post => (
+                {orderedPosts.map(post => (
                         <Grid key={post.post_id} item xs={11} sm={10} md={7} style={{marginBottom: 16}}>
                             <Post post={post}/>
                         </Grid>
