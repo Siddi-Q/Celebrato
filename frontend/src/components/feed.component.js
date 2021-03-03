@@ -48,7 +48,7 @@ export default function Feed() {
     else {
         return (
             <Grid item xs={11} sm={10} md={7} style={{textAlign: "center"}}>
-                <p>Error - Could not load posts!</p>
+                <Typography variant="h5">Error - Could not load posts!</Typography>
             </Grid>
         );
     }
